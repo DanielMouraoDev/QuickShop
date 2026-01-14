@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/basketservice.iml" filepath="$PROJECT_DIR$/.idea/basketservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Basket Service/BasketService.iml" filepath="$PROJECT_DIR$/Basket Service/BasketService.iml" />
     </modules>
   </component>
 </project>

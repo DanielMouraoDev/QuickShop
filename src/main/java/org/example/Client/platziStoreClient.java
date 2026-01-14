@@ -1,13 +1,13 @@
-package Client;
+package org.example.Client;
 
-import Client.Response.platziProductResponse;
+import org.example.Client.Response.platziProductResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "PlatziStoreClient", url = "${basket.client.platzi")
+@FeignClient(name = "PlatziStoreClient", url = "${basket.client.platzi}")
 public interface platziStoreClient {
 
     @GetMapping("/products")

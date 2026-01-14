@@ -1,5 +1,7 @@
 package org.example.Controller;
 
+import org.example.Client.Response.platziProductResponse;
+import org.example.Service.productService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,18 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class productController {
 
-    private final productService productService
+    private final productService productService;
 
     @GetMapping
-    public ResponseEntity<Void> getAllProducts() {
+    public ResponseEntity getAllProducts () {
+        return ResponseEntity.ok(productService.getAllProducts());
 
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Void> getProductById(@PathVariable Long id) {
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<platziProductResponse> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
 }
 
