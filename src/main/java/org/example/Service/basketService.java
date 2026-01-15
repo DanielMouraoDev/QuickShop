@@ -9,6 +9,7 @@ import org.example.Entity.basket;
 import org.example.Entity.product;
 import org.example.Entity.status;
 import org.example.Repository.basketRepository;
+import org.example.exceptions.businessException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -30,20 +31,10 @@ public class basketService {
     public basket createBasket(basketRequest basketRequest) {
         basketRepository.findByClientAndStatus(basketRequest.clientId(), status.OPEN)
                 .ifPresent(basket -> {
-                    throw new IllegalArgumentException("There is already a basket open for this client");
+                    throw new businessException("There is already a basket open for this client");
                 });
 
-        List<product> products = new ArrayList<>();
-        basketRequest.products().forEach(reqItem -> {
-            platziProductResponse response = productService.getProductById(reqItem.id());
-
-            products.add(product.builder()
-                    .id(response.id())
-                    .title(response.title())
-                    .price(response.price())
-                    .quantity(reqItem.quantity())
-                    .build());
-        });
+        List<product> products = getProducts(basketRequest);
 
         basket newBasket = org.example.Entity.basket.builder()
                 .client(basketRequest.clientId())
@@ -56,21 +47,11 @@ public class basketService {
         return basketRepository.save(newBasket);
     }
 
+
     public basket updateBasket(String basketId, basketRequest request) {
         basket savedBasket = this.getBasketById(basketId);
 
-        List<product> products = new ArrayList<>();
-
-        request.products().forEach(reqItem -> {
-            platziProductResponse response = productService.getProductById(reqItem.id());
-
-            products.add(product.builder()
-                    .id(response.id())
-                    .title(response.title())
-                    .price(response.price())
-                    .quantity(reqItem.quantity())
-                    .build());
-        });
+        List<product> products = getProducts(request);
 
         savedBasket.setProducts(products);
         savedBasket.calculateTotalPrice();
@@ -86,5 +67,20 @@ public class basketService {
 
     public void deleteBasket(String id) {
         basketRepository.delete(getBasketById(id));
+    }
+
+    private List<product> getProducts(basketRequest basketRequest) {
+        List<product> products = new ArrayList<>();
+        basketRequest.products().forEach(reqItem -> {
+            platziProductResponse response = productService.getProductById(reqItem.id());
+
+            products.add(product.builder()
+                    .id(response.id())
+                    .title(response.title())
+                    .price(response.price())
+                    .quantity(reqItem.quantity())
+                    .build());
+        });
+        return products;
     }
 }
