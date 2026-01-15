@@ -50,7 +50,7 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 
 ### MongoDB
 - Banco de dados NoSQL, utilizado para armazenar as informações do carrinho de compras de maneira flexível.
-- Saiba mais: [Documentação oficial do MongoDB](https://www.mongodb.com/docs/)###MongoDB
+- Saiba mais: [Documentação oficial do MongoDB](https://www.mongodb.com/docs/) MongoDB
 - Material de aula - https://aluno.java10x.dev/187814-spring10x [Aula 14]
 
 ### OpenFeign
