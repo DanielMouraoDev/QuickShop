@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.Controller.Request.basketRequest;
 import org.example.Controller.Request.paymentRequest;
 import org.example.Entity.basket;
+import org.example.Repository.basketRepository;
 import org.example.Service.basketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +35,11 @@ public class basketController {
     @PutMapping("/{id}/payment")
     public ResponseEntity<basket> payBasket(@PathVariable String id, @RequestBody paymentRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(basketService.payBasket(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBasket(@PathVariable String id) {
+        basketService.deleteBasket(id);
+        return ResponseEntity.noContent().build();
     }
 }
